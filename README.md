@@ -18,19 +18,43 @@ Long-term memory and self-evolving skills for the [DeepSeek Harness](https://git
 
 ## How it works
 
+### Two paths write
+
+**The agent writes as it goes.** It is already in the conversation, so noticing costs it nothing:
+a fact about you, a correction you made, a way of working that just succeeded.
+
+**A catch-up pass writes what it missed.** Models forget to do this — measurably, not
+occasionally. So when tool calls pile up without a write, a second pass goes back over that
+stretch of conversation and reports what was skipped. It costs one small model call, and only
+when the first path has gone quiet.
+
+**Both paths end at the same gate** — same validation, same deduplication, same filename rules.
+The automatic path gets no shortcut.
+
+### The whole flow
+
 ```
-You talk to the agent
-   │
-   ├─ Something worth keeping comes up → it writes it down
-   │    · a fact about you or your project     → a memory
-   │    · a way of working that just succeeded → a skill
-   │
-   └─ Next session, it starts already knowing.
+WRITE
+  ├─ primary:   the agent writes as it goes
+  └─ catch-up:  a later pass fills the gaps
+        │
+        ▼  both take the same gate
+STORE
+  ├─ memories/     one .md per fact
+  └─ skills/       one SKILL.md per class of task
+        │
+        ▼
+RECALL
+  └─ the catalog rides in the prompt. The agent opens a file when a line earns it
 ```
 
-Two things are worth knowing about how it decides:
+Nothing is ever pushed into the conversation, which is why recall costs nothing until a line is
+actually worth opening.
+
+### Two things worth knowing about how it decides
 
 - **It only writes down what actually worked.** A lesson from an unsolved problem is a dead end wearing a method's clothes, so nothing gets recorded until the task is finished, the error is fixed, the approach ran through.
+- **Saying the same thing twice makes a memory stronger, not duplicated.** A near-repeat updates the original instead of adding a second copy — repetition is evidence it matters.
 - **It forgets nothing behind your back.** Memories are plain Markdown files you can open, read, edit, or delete.
 
 ## Install

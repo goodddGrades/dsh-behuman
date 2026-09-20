@@ -69,6 +69,14 @@ dsh plugin --profile tui add @goodddgrades/dsh-behuman     # 如果你用 `dsh t
 
 **同时用多个 profile 的话，每个都要装一遍。**
 
+### 或者，让你的 AI 去装
+
+如果你已经在 dsh 会话里，上面那些命令一个字都不用敲：
+
+> 帮我装一下 dsh-behuman 这个插件 —— https://github.com/goodddgrades/dsh-behuman
+
+它能打开那个页面，自己把安装跑掉。
+
 ## 记忆存在哪
 
 ```

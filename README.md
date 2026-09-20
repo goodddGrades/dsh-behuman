@@ -80,6 +80,14 @@ first time you use it, so this works even if you have never launched it before.
 
 If you use more than one profile, install into each of them.
 
+### Or hand it to your agent
+
+If you are already in a dsh session, you do not have to type any of that:
+
+> Install the dsh-behuman plugin — https://github.com/goodddgrades/dsh-behuman
+
+Your agent can read that page and run the install itself.
+
 ## Where your memories live
 
 ```

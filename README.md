@@ -14,7 +14,7 @@ Long-term memory and self-evolving skills for the [DeepSeek Harness](https://git
 
 - **Remembers you.** Your preferences, your corrections, your project's state — carried across sessions.
 - **Gets better on its own.** A working approach gets written down as a skill, so the next similar task starts already knowing.
-- **Costs you nothing to run.** No commands to type, no memory to manage. Install it and it works.
+- **Nothing to operate.** No commands to type, no memory to manage. Install it and it works.
 
 ## How it works
 
@@ -48,10 +48,16 @@ RECALL
   └─ the catalog rides in the prompt. The agent opens a file when a line earns it
 ```
 
-Nothing is ever pushed into the conversation, which is why recall costs nothing until a line is
-actually worth opening.
+**There is no lookup step.** Nothing is searched, and your question is never used as a query — the
+catalog is simply part of the context, and opening a file is the agent's own call. Recall costs no
+extra time.
 
-### Two things worth knowing about how it decides
+**The catalog is not free, though, and it grows.** One line per memory, in front of the agent every
+turn. At a few dozen memories that is nothing; at a few hundred it is real money. That is the known
+ceiling of this design, and the way past it is a searchable index derived from these files — never a
+database that replaces them.
+
+### Three things worth knowing about how it decides
 
 - **It only writes down what actually worked.** A lesson from an unsolved problem is a dead end wearing a method's clothes, so nothing gets recorded until the task is finished, the error is fixed, the approach ran through.
 - **Saying the same thing twice makes a memory stronger, not duplicated.** A near-repeat updates the original instead of adding a second copy — repetition is evidence it matters.

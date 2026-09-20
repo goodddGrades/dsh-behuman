@@ -88,6 +88,10 @@ If you are already in a dsh session, you do not have to type any of that:
 
 Your agent can read that page and run the install itself.
 
+Installing straight from GitHub **builds the plugin on your machine**, so dsh will stop and ask you
+to authorize that once. It tells you exactly what to add — the build is this package's own
+`prepare` script, and nothing runs it until you say so.
+
 ## Where your memories live
 
 ```

@@ -42,7 +42,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "prepublishOnly": "npm run build",
+    "prepare": "npm run build",
     "test": "node --experimental-strip-types tests/store.smoke.mjs && node --experimental-strip-types tests/review.smoke.mjs && node --experimental-strip-types tests/apply.smoke.mjs"
   },
   "peerDependencies": {

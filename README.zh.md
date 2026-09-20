@@ -77,6 +77,9 @@ dsh plugin --profile tui add @goodddgrades/dsh-behuman     # 如果你用 `dsh t
 
 它能打开那个页面，自己把安装跑掉。
 
+**从 GitHub 直接装会在你机器上现场构建**，所以 dsh 会停下来问你授权一次——它会告诉你具体加什么。
+要构建的就是这个包自己的 `prepare` 脚本，你说可以之前它不会跑。
+
 ## 记忆存在哪
 
 ```

@@ -6,7 +6,7 @@
  *   node --experimental-strip-types tests/apply.smoke.mjs
  */
 
-import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync } from 'node:fs'
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { applyReport } from '../src/apply.ts'
@@ -66,7 +66,18 @@ const again = applyReport(logger, store, { skillsDir }, {
 })
 check('记忆走强化不新建', again.memories, 1)
 check('记忆文件数没变', readdirSync(join(root, 'memory', 'memories')).filter(f => f.endsWith('.md')).length, 1)
-check('同名技能不覆盖', again.skills, 0)
+check('自己写的技能可以更新', again.skills, 1)
+
+console.log('\n— 手写的技能碰不得 —')
+mkdirSync(join(skillsDir, 'hand-made'), { recursive: true })
+writeFileSync(join(skillsDir, 'hand-made', 'SKILL.md'), '---\nname: hand-made\ndescription: 人手写的\n---\n\n正文\n')
+const clobber = applyReport(logger, store, { skillsDir }, {
+  memories: [],
+  skills: [{ name: 'hand-made', description: '想覆盖', content: '不该落盘' }],
+  summary: '',
+})
+check('手写技能没被写进去', clobber.skills, 0)
+check('手写技能内容完好', readFileSync(join(skillsDir, 'hand-made', 'SKILL.md'), 'utf8').includes('人手写的'), true)
 
 console.log('\n— 空报告 —')
 const empty = applyReport(logger, store, { skillsDir }, { memories: [], skills: [], summary: '没有' })

@@ -122,8 +122,12 @@ export function applyReport(
         continue
       }
       const result = writeSkill(settings.skillsDir, proposal)
-      if (result.ok) skills++
-      else logger.info(`dsh-memory: skill not written (${proposal.name}): ${result.reason}`)
+      if (result.ok) {
+        skills++
+        logger.info(`dsh-memory: skill ${result.action} — ${proposal.name}`)
+      } else {
+        logger.info(`dsh-memory: skill not written (${proposal.name}): ${result.reason}`)
+      }
     }
   }
 

@@ -5,11 +5,11 @@
  *   node --experimental-strip-types tests/review.smoke.mjs
  */
 
-import { mkdtempSync, rmSync, readFileSync, existsSync } from 'node:fs'
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { countToolCalls, scanClues } from '../src/clues.ts'
-import { rejectSkillName, writeSkill } from '../src/skills.ts'
+import { isOwnSkill, rejectSkillName, writeSkill } from '../src/skills.ts'
 
 let failures = 0
 function check(label, actual, expected) {
@@ -68,14 +68,31 @@ console.log('\n— 技能落盘 —')
 const skillsDir = mkdtempSync(join(tmpdir(), 'dsh-skills-'))
 const first = writeSkill(skillsDir, { name: 'pdf-table-extraction', description: '从 PDF 抽表格', content: '先 pdftotext，再按行切。' })
 check('新技能写入成功', first.ok, true)
+check('动作为 created', first.ok && first.action, 'created')
 check('SKILL.md 落盘', existsSync(join(skillsDir, 'pdf-table-extraction', 'SKILL.md')), true)
 const body = readFileSync(join(skillsDir, 'pdf-table-extraction', 'SKILL.md'), 'utf8')
 check('frontmatter 有 name', body.includes('name: pdf-table-extraction'), true)
 check('frontmatter 有 description', body.includes('description: 从 PDF 抽表格'), true)
 
+console.log('\n— 标记（用来区分「自动写的」和「手写的」）—')
+check('写进去的技能带了标记', body.includes('generated-by: dsh-behuman'), true)
+check('标记在 metadata 下面', body.includes('metadata:\n  generated-by: dsh-behuman'), true)
+check('isOwnSkill 认得出自己的', isOwnSkill(join(skillsDir, 'pdf-table-extraction')), true)
+
+const handWritten = join(skillsDir, 'my-own-skill')
+mkdirSync(handWritten, { recursive: true })
+writeFileSync(join(handWritten, 'SKILL.md'), '---\nname: my-own-skill\ndescription: 我自己写的\n---\n\n正文\n')
+check('isOwnSkill 认得出不是自己的', isOwnSkill(handWritten), false)
+check('手动写的同名绝不会被覆盖', writeSkill(skillsDir, { name: 'my-own-skill', description: 'x', content: 'y' }).ok, false)
+const refusal = writeSkill(skillsDir, { name: 'my-own-skill', description: 'x', content: 'y' })
+check('拒绝理由说明是手写的', refusal.ok === false && refusal.reason.includes('手写'), true)
+check('手写技能内容没被动过', readFileSync(join(handWritten, 'SKILL.md'), 'utf8').includes('我自己写的'), true)
+
 const again = writeSkill(skillsDir, { name: 'pdf-table-extraction', description: '改一版', content: '不同内容' })
-check('同名不覆盖（交给主 agent 更新）', again.ok, false)
-check('拒绝理由提到已有同名', again.ok === false && again.reason.includes('同名'), true)
+check('自己的技能可以更新', again.ok, true)
+check('动作为 updated', again.ok && again.action, 'updated')
+check('更新后仍然是自己的', isOwnSkill(join(skillsDir, 'pdf-table-extraction')), true)
+check('更新后标记还在', readFileSync(join(skillsDir, 'pdf-table-extraction', 'SKILL.md'), 'utf8').includes('generated-by: dsh-behuman'), true)
 
 const bad = writeSkill(skillsDir, { name: 'fix-2026-09-20-thing', description: 'x', content: 'y' })
 check('踩红线的技能写不进去', bad.ok, false)

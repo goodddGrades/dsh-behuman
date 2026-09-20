@@ -53,6 +53,15 @@ Plain text, yours to read and edit. Each project directory gets its own memory, 
 
 Skills are written to `.agents/skills/` — the same place hand-written skills live, in the format dsh already reads.
 
+**Auto-written skills are marked.** Each one carries this in its frontmatter:
+
+```yaml
+metadata:
+  generated-by: dsh-behuman
+```
+
+So you can tell at a glance which skills the agent wrote and which ones you did. It updates its own; it never touches yours — a hand-written skill in the way is a refusal, not an overwrite.
+
 ## Configuration
 
 Every option has a sensible default; you only need this if you want to change something.

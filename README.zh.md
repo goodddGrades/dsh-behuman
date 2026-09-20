@@ -53,6 +53,15 @@ dsh plugin --profile <你的 profile> add @goodddgrades/dsh-behuman
 
 技能写在 `.agents/skills/`——跟手写的技能放在一起，用的也是 dsh 本来就能读的格式。
 
+**自动写的技能带标记。** 每个自动生成的技能，frontmatter 里都有这两行：
+
+```yaml
+metadata:
+  generated-by: dsh-behuman
+```
+
+所以**你一眼就能看出哪些是 AI 写的、哪些是你自己写的**。它只更新自己写的，**绝不会动你手写的**——遇到手写的同名技能，它会拒绝而不是覆盖。
+
 ## 配置
 
 每项都有合理默认值，想改才需要看这个表。

@@ -55,11 +55,19 @@
 
 ## 安装
 
+`dsh` 每次跑的是**一个 profile**——一套命名好的插件搭配和配置，启动的时候由你指定。自带的三个是
+`web`、`tui`、`headless`。
+
+**装进你平时启动用的那个**：
+
 ```bash
-dsh plugin --profile <你的 profile> add @goodddgrades/dsh-behuman
+dsh plugin --profile web add @goodddgrades/dsh-behuman     # 如果你用 `dsh web` 启动
+dsh plugin --profile tui add @goodddgrades/dsh-behuman     # 如果你用 `dsh tui` 启动
 ```
 
-就这一步，装完不需要再开启什么。
+装完就这样，不需要再开启什么。profile 是**首次使用时自动创建**的，所以哪怕你从没启动过也没关系。
+
+**同时用多个 profile 的话，每个都要装一遍。**
 
 ## 记忆存在哪
 

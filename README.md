@@ -65,11 +65,20 @@ database that replaces them.
 
 ## Install
 
+`dsh` runs one **profile** at a time — a named set of plugins and settings that you choose when you
+launch it. The ones that ship with dsh are `web`, `tui`, and `headless`.
+
+Install into the profile you actually launch with:
+
 ```bash
-dsh plugin --profile <your-profile> add @goodddgrades/dsh-behuman
+dsh plugin --profile web add @goodddgrades/dsh-behuman     # if you run `dsh web`
+dsh plugin --profile tui add @goodddgrades/dsh-behuman     # if you run `dsh tui`
 ```
 
-That's it — there is nothing to enable afterwards.
+That is the whole install, and there is nothing to enable afterwards. The profile is created the
+first time you use it, so this works even if you have never launched it before.
+
+If you use more than one profile, install into each of them.
 
 ## Where your memories live
 

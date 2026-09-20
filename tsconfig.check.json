@@ -1,0 +1,28 @@
+{
+  "//": "本地类型检查专用。dsh-memory 在 dsh 仓库之外，解析不到 @deepseek-ai/*，所以这里把用到的包映射到 dsh 检出里的实际位置。前提是 dsh 仓库已经跑过 `pnpm install` 并产出类型声明（`pnpm run build:lib:host` 的 tsc 那一步——它后面的 tsdown 打包步骤可以失败，不影响 .d.ts）。发布用的 tsconfig.json 不含这些映射。",
+  "compilerOptions": {
+    "target": "ES2024",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2024"],
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "types": ["node"],
+    "typeRoots": ["../deepseek-harness-master/deepseek-harness-master/node_modules/@types"],
+    "paths": {
+      "@deepseek-ai/cordis": ["../deepseek-harness-master/deepseek-harness-master/packages/core/tools/node_modules/@deepseek-ai/cordis"],
+      "@deepseek-ai/schemastery": ["../deepseek-harness-master/deepseek-harness-master/packages/core/tools/node_modules/@deepseek-ai/schemastery"],
+      "@deepseek-ai/dsh-tools": ["../deepseek-harness-master/deepseek-harness-master/packages/core/tools"],
+      "@deepseek-ai/dsh-system-prompt": ["../deepseek-harness-master/deepseek-harness-master/packages/core/system-prompt"],
+      "@deepseek-ai/dsh-agent": ["../deepseek-harness-master/deepseek-harness-master/packages/core/agent"],
+      "@deepseek-ai/dsh-session": ["../deepseek-harness-master/deepseek-harness-master/packages/core/session"],
+      "@deepseek-ai/dsh-llm": ["../deepseek-harness-master/deepseek-harness-master/packages/llm/llm"],
+      "@deepseek-ai/dsh-subagent": ["../deepseek-harness-master/deepseek-harness-master/packages/subagent/subagent"],
+      "@deepseek-ai/dsh-timeout": ["../deepseek-harness-master/deepseek-harness-master/packages/util/timeout"]
+    }
+  },
+  "include": ["src"]
+}

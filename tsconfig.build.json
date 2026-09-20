@@ -1,0 +1,14 @@
+{
+  "//": "本地构建：在 dsh 仓库外产出可安装的 lib/。类型解析走 tsconfig.check.json 的路径映射（因为 dsh 的包在仓库外解析不到），但产物里的 import 说明符仍是裸包名，运行时由 profile 的 node_modules 解析。rewriteRelativeImportExtensions 把源码里的 './x.ts' 改写成 './x.js'。",
+  "extends": "./tsconfig.check.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "rootDir": "src",
+    "outDir": "lib",
+    "declaration": true,
+    "declarationDir": "lib/types",
+    "allowImportingTsExtensions": true,
+    "rewriteRelativeImportExtensions": true
+  },
+  "include": ["src"]
+}

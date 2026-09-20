@@ -1,0 +1,12 @@
+# Build output — published from `prepublishOnly`, never committed.
+lib/
+
+# Dependencies.
+node_modules/
+
+# Packed tarballs.
+*.tgz
+
+# Scratch from local dsh runs (see README "Verification").
+.dsh/
+.dsh-memory-test/

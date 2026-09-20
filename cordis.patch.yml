@@ -1,0 +1,16 @@
+# dsh-memory bundle patch: mounts the memory row into the profile composition.
+#
+# `name` must equal the installed PACKAGE name — the row resolves through the
+# profile directory's node_modules, so a scoped package has to be spelled with
+# its scope here too. Keep this in sync with `name` in package.json.
+#
+# `id` is local to the profile: it is what a user's own patch layer targets to
+# override the config below.
+- insert:
+    - id: dsh-memory
+      name: '@goodddgrades/dsh-behuman'
+      config:
+        # Where memories live. Holds MEMORY.md (the catalog) and memories/.
+        dir: .dsh/memory
+        # Where the standing rules tell the model to write SKILL.md bundles.
+        skillsDir: .agents/skills

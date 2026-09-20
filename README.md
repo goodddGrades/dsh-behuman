@@ -4,6 +4,12 @@ English | [中文](README.zh.md)
 
 Long-term memory and self-evolving skills for the [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness).
 
+**The name is the goal — dsh that knows you the way a person does.**
+
+Someone who has worked with you for a month knows what you care about, how you like to be told
+things, and which approaches you have already ruled out; they also stop repeating a mistake once
+it is fixed.
+
 ## The problem
 
 **Every session starts from zero.** You tell the agent your project uses PostgreSQL; next session it asks again. You correct how it explains things; next session it's back to the same habit.

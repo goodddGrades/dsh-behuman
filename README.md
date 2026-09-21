@@ -159,11 +159,6 @@ Every option has a default; you only need this if you want to change something.
 | `reviewTimeoutMs` | `60000` | How long that double-check may take. |
 | `reviewMaxTokens` | `2048` | Its output limit. |
 
-## Status
-
-Pre-release. Everything above works — memories are written, recalled across sessions, and skills
-get written on their own. It has not yet been run by anyone but its author.
-
 ## License
 
 MIT — see [LICENSE](LICENSE).
